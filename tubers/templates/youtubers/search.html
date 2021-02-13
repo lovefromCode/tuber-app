@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="searchpage">
+    <div class="banner">
+      <img src="{% static './assets/images/bg-banner.png' %}" alt="" class="img-fluid w-100">
+      <h1 class="text-center">
+        Search Result
+      </h1>
+    </div>
+
+    <section class="searchbox container mt-5 p-3 bg-accent">
+      <form method="GET" action="{% url 'search' %}">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <select name="city" id="inputState" class="form-control">
+              <option selected disabled hidden>City</option>
+              {% for city in city_search %}
+                <option value="{{city}}">{{city}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <select name="camera_type" id="inputState" class="form-control">
+              <option selected disabled hidden>Camera Type</option>
+              {% for camera in camera_type_search %}
+                <option value="{{camera}}">{{camera}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <select name="category" class="form-control">
+              <option selected disabled hidden>Category</option>
+              {% for category in category_search %}
+                <option value="{{category}}">{{category}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-light">Search</button>
+      </form>
+      <div class="text-center">
+
+      </div>
+    </section>
+
+
+    
+
+    <section class="search-results container mt-3 grid">
+
+    {% if flag %}
+      {% for tub in tubers %}
+      <div class="card border-0 text-center">
+        <div>
+          <img src="{{tub.photo.url}}" class="card-img-top" alt="team-member">
+
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{tub.name}}</h5>
+          <p class="card-text">{{tub.category}}</p>
+          <div class="person-description mt-2">
+            <button class="btn btn-accent"> City: {{tub.city}} </button>
+            <button class="btn btn-accent"> Age: {{tub.age}} </button>
+            <button class="btn btn-accent"> Height: {{tub.height}} </button>
+          </div>
+          <div class="person-description mt-2">
+            <button class="btn btn-accent"> Solo: {{tub.crew}} </button>
+            <button class="btn btn-accent"> Canon: {{tub.camera_type}} </button>
+            <button class="btn btn-accent"> Subs: {{tub.subs_count}} </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% else %}
+      <h1>Oops somethong went wrong.</h1>
+    {% endif %}
+
+
+
+
+    </section>
+  </main>
+
+{% endblock %}
